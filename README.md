@@ -34,3 +34,7 @@ Hierbij kunnen we een threshold op de LDR gebruiken van 50% lichtintensiteit.
 Omgevingslicht.
 
 LDR blokkeren met object.
+
+LDR is gevoelig aan temperatuur, EMI, voedingsspanning, ....
+
+
