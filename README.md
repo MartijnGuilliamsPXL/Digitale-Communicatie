@@ -6,7 +6,7 @@ Demonstreer en vergelijk de effectiviteit van verschillende digitale communicati
 
 
 
-Geluidscommunicatie – voeg achtergrondgeluid ofinterferentie (Ultrasoon?)
+Geluidscommunicatie – voeg achtergrondgeluid of interferentie (Ultrasoon?)
 
 Lichtcommunicatie - voeg verschillende materialenals obstakels toe (Ir)
 
