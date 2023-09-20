@@ -20,3 +20,17 @@ Iedere groep moet een andere lijncodering techniek implementeren bv. On-off keyi
 
 
 Bijvoorbeeld: Gebruik RS-232 om verschillende lijn-coderingstechnieken zoals Manchester-codering of NRZ te testen.
+
+
+## Ideeën
+
+Een digitale 1 is de led aandoen voor één volledige seconde.
+
+Een digitale 0 is de led aandoen voor een halve seconde.
+
+Hierbij kunnen we een threshold op de LDR gebruiken van 50% lichtintensiteit.
+
+## Ruis
+Omgevingslicht.
+
+LDR blokkeren met object.
