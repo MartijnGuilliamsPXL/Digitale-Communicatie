@@ -64,11 +64,13 @@
 #include "GUI.h"
 #include "mtb_st7789v.h"
 #include "cy8ckit_028_tft_pins.h" /* This is part of the CY8CKIT-028-TFT shield library. */
+#include "cy_retarget_io.h"
 
 #define mySwPin_Port P0_4_PORT
 #define mySwPin_Num P0_4_NUM
 uint32_t pinReadValue = 0;
 uint32_t teller = 0;
+uint32_t leegBericht = 0;
 
 
 const mtb_st7789v_pins_t tft_pins =
@@ -150,6 +152,8 @@ int main(void)
     /* Enable global interrupts */
     __enable_irq();
 
+    //Cy_SysInit();
+
     /*Initialize retarget-io to use debug UART port*/
     cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX,BAUD_RATE);
 
@@ -158,7 +162,7 @@ int main(void)
 
     GUI_Init();
 
-    GUI_DispString("Hello world!\n");
+    //GUI_DispString("Hello world!\n");
 
     cyhal_adc_t adc_obj;
     cyhal_adc_channel_t adc_chan_0_obj;
@@ -189,27 +193,101 @@ int main(void)
 
     /* \x1b[2J\x1b[;H - ANSI ESC sequence for clear screen */
     //printf("\x1b[2J\x1b[;H");
+    printf("\x1b[2J\x1b[;H");
+
+	printf("***********************************************************\r\n");
+	printf("PSoC 6 MCU UART Transmit and Receive\r\n");
+	printf("***********************************************************\r\n\n");
+	printf(">> Start typing to see the echo on the screen \r\n\n");
+
+
+	if(adc_eos_flag==1)
+	{
+		adc_eos_flag=0;
+		/*Print Filtered result*/
+	  //  printf("ADC_Count = %ld\n\r",filtered_result);
+	}
+
+	adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
+	adc_out = adc_out/665;
+
+	while(adc_out < 70)
+	{
+		//GUI_DispString("       Bit is  1");
+		printf("       Waiting ");
+		printf("\r\n\n");
+		adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
+		adc_out = adc_out/665;
+		Cy_SysLib_Delay(WAIT_TIME);
+
+	}
+
+
+
 
     for (;;)
     {
-        /*Check EOS triggered enable flag to update filtered data*/
-        if(adc_eos_flag==1)
-        {
-            adc_eos_flag=0;
-            /*Print Filtered result*/
-          //  printf("ADC_Count = %ld\n\r",filtered_result);
-        }
-        /*Insert delay between sampling*/
-        Cy_SysLib_Delay(WAIT_TIME);
-        /*Read ADC conversion result for channel number 0*/
-        adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
-        adc_out = adc_out/665;
+    	//Cy_GPIO_Write(P13_6_PORT, P13_6_NUM, 1); /* Set the GPIO pin to high (logic level 1). */
+		//Cy_GPIO_Inv(P13_6_PORT, P13_6_NUM);
+		/*Check EOS triggered enable flag to update filtered data*/
+		if(adc_eos_flag==1)
+		{
+			adc_eos_flag=0;
+			/*Print Filtered result*/
+		  //  printf("ADC_Count = %ld\n\r",filtered_result);
+		}
+		/*Insert delay between sampling*/
+		//Cy_SysLib_Delay(WAIT_TIME);
+		/*Read ADC conversion result for channel number 0*/
+		adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
+		adc_out = adc_out/665;
+
+    	if(leegBericht == 8)
+		{
+			printf("      Leeg Bericht!!!!!!!!!!!!!!! \r\n\n");
+
+			while(adc_out < 70)
+			{
+				//GUI_DispString("       Bit is  1");
+				printf("       Waiting ");
+				printf("\r\n\n");
+				adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
+				adc_out = adc_out/665;
+				Cy_SysLib_Delay(WAIT_TIME);
+
+			}
+			printf("       Start \r\n\n");
+			cyhal_system_delay_ms(400);
+			leegBericht = 0;
+		}
+
+
         GUI_DispString("LDR is  ");
         GUI_DispSDec(adc_out, 3);
+
+
+        if(adc_out > 70)
+        {
+        	GUI_DispString("       Bit is  1");
+        	printf("       Bit is  1 \r\n\n");
+        	leegBericht = 0;
+
+        }
+        else
+        {
+        	GUI_DispString("       Bit is  0");
+        	printf("       Bit is  0 \r\n\n");
+        	leegBericht++;
+        }
+
+
+
         GUI_DispString("\n");
         teller = teller +1;
-
-        if (teller > 22)
+        cyhal_system_delay_ms(500);
+        //GUI_Clear();
+        /*
+        if (teller > 29)
         {
 			teller = 0;
 			GUI_Clear();
@@ -219,8 +297,8 @@ int main(void)
              {
                 CY_ASSERT(0);
              }
-             cyhal_system_delay_ms(100);
-        }
+             //cyhal_system_delay_ms(100);
+        }*/
     }
 }
 
