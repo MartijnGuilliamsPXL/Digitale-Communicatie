@@ -189,28 +189,13 @@ int main(void)
     	adc_out = adc_out/665;
 
 
-        //GUI_DispString("LDR is  ");
-        //GUI_DispSDec(adc_out, 3);
-
-
 		if(adc_out > LDRminValue)
 		{
-			//GUI_DispString("       Bit is  1");
-			//printf("1");
-			//printf("T %d", teller);
-			//printf("\r\n\n");
-
 			leegBericht = 0;
 			array[teller] = 1;
-
 		}
 		else
 		{
-			//GUI_DispString("       Bit is  0");
-			//printf("0");
-			//printf("T %d", teller);
-			//printf("\r\n\n");
-
 			array[teller] = 0;
 			leegBericht++;
 		}
@@ -220,8 +205,6 @@ int main(void)
 
         if(teller == 16)
         {
-        	//printf("\r\n\n");
-        	//printArray();
         	//manchesterDecoder();
         	diffManchesterDecoder();
         	convertToString(binCharArray, 8);
@@ -230,24 +213,6 @@ int main(void)
         }
 
         Cy_SysLib_Delay(WAIT_TIME);
-
-
-        //GUI_DispString("\n");
-        //GUI_Clear();
-
-        /*
-        if (teller > 29)
-        {
-			teller = 0;
-			GUI_Clear();
-			//result = cyhal_syspm_deepsleep();
-
-			if(result != CY_RSLT_SUCCESS)
-             {
-                CY_ASSERT(0);
-             }
-             //cyhal_system_delay_ms(100);
-        }*/
     }
 }
 
@@ -268,6 +233,18 @@ void printArray() {
 	printf("\n");
 }
 
+void convertToString(uint8_t* array, int size) {
+    printf("Converted string: ");
+    for (int i = 0; i < size; i += 8) {
+        uint8_t ascii = 0;
+        for (int j = 0; j < 8; j++) {
+            ascii = (ascii << 1) | array[i + j];
+        }
+        printf("%c", ascii);
+    }
+    printf("\r\n\n");
+}
+
 
 void manchesterDecoder(){
 	for (uint8_t i = 0; i < 16; i=i+2) {
@@ -286,18 +263,6 @@ void manchesterDecoder(){
 	printf("\r\n\n");
 }
 
-
-void convertToString(uint8_t* array, int size) {
-    printf("Converted string: ");
-    for (int i = 0; i < size; i += 8) {
-        uint8_t ascii = 0;
-        for (int j = 0; j < 8; j++) {
-            ascii = (ascii << 1) | array[i + j];
-        }
-        printf("%c", ascii);
-    }
-    printf("\r\n\n");
-}
 
 void diffManchesterDecoder(){
 	if(array[0] == 1 && array[1] == 0){
