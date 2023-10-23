@@ -36,7 +36,7 @@ const mtb_st7789v_pins_t tft_pins =
 /*Baudrate for UART*/
 #define BAUD_RATE       (115200)
 /*Wait time between samples in milliseconds*/
-#define WAIT_TIME        (50)
+#define WAIT_TIME        (100)
 
 /* IIR filter coefficients. Sum of the two coefficients (A & B) should be a power of 2.
  * IIR shift co-efficient should be LOG(COEFF_A + COEFF_B) base 2 */
