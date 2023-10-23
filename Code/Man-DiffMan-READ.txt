@@ -130,8 +130,6 @@ int main(void)
 	if(adc_eos_flag==1)
 	{
 		adc_eos_flag=0;
-		/*Print Filtered result*/
-	  //  printf("ADC_Count = %ld\n\r",filtered_result);
 	}
 
 	adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
@@ -139,13 +137,8 @@ int main(void)
 
 	while(adc_out < LDRminValue)
 	{
-		//GUI_DispString("       Bit is  1");
-		//printf("Waiting ");
-		//printf("\r\n\n");
 		adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
 		adc_out = adc_out/665;
-		//Cy_SysLib_Delay(WAIT_TIME);
-
 	}
 	Cy_SysLib_Delay(WAIT_TIME);
 
@@ -156,8 +149,6 @@ int main(void)
 		if(adc_eos_flag==1)
 		{
 			adc_eos_flag=0;
-			//Print Filtered result
-		    //printf("ADC_Count = %ld\n\r",filtered_result);
 		}
 
     	if(leegBericht == 16)
@@ -168,13 +159,8 @@ int main(void)
 
 			while(adc_out < LDRminValue)
 			{
-				//GUI_DispString("       Bit is  1");
-				//printf("       Waiting ");
-				//printf("\r\n\n");
 				adc_out = cyhal_adc_read_u16(&adc_chan_0_obj);
 				adc_out = adc_out/665;
-				//Cy_SysLib_Delay(WAIT_TIME);
-
 			}
 
 			printf("Start: \r\n\n");
