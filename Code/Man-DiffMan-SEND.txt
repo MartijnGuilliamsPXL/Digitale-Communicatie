@@ -1,0 +1,130 @@
+#include "cy_pdl.h"
+#include "cyhal.h"
+#include "cybsp.h"
+#include "cy_syslib.h"
+
+/* Guard for Proto Kit */
+
+#ifndef CYBSP_LED_RGB_BLUE
+	#define EXTERN (P13_6)
+#endif
+
+int delay_time = 100;
+char str[] = "Hello World";
+uint8_t binaryArray[(sizeof(str)-1)*8];
+
+
+
+
+int main(void)
+{
+    cy_rslt_t result;
+
+    /* Initialize the device and board peripherals */
+    result = cybsp_init() ;
+    if (result != CY_RSLT_SUCCESS)
+    {
+        CY_ASSERT(0);
+    }
+
+    __enable_irq();
+
+    // Initialize all the LED Pins
+    cyhal_gpio_init(P13_6, CYHAL_GPIO_DIR_OUTPUT, CYHAL_GPIO_DRIVE_STRONG, CYBSP_LED_STATE_OFF);
+
+    cyhal_gpio_write(P13_6, 0);
+    Cy_SysLib_Delay(5000);
+
+
+	//Testing
+    //uint8_t array[] = {0,1,0,1,0,0,1};
+    // {0,1,0,1,0,0,1}
+    // 01 10 10 01 01 01 10
+
+    // {1,1,0,1,0,0,1}
+    // 10 01 01 10 10 10 01
+
+    // {0,1,1,0,1,0,0,0,0,1,1,0,0,1,0,1}
+    //01101000 01100101 01101100 01101100 01101111
+
+    //0,1,0,0,1,0,0,0,0,1,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,1,0,0,1,1,0,0,0,1,0,0,1,1,1,1
+
+
+    stringToBinary();
+    cyhal_gpio_write(P13_6, 1);
+    delay();
+
+    //manchesterCoder();
+
+    diffManchesterCoder();
+
+
+    for (;;)
+    {
+
+    }
+}
+
+void stringToBinary()
+{
+    size_t len = strlen(str);
+    for (size_t i = 0; i < len; i++) {
+        char c = str[i];
+        for (int j = 7; j >= 0; j--) {
+            binaryArray[(i * 8) + (7 - j)] = (c >> j) & 1;
+        }
+    }
+}
+
+void delay()
+{
+	Cy_SysLib_Delay(delay_time);
+}
+
+
+void manchesterCoder(){
+	for (int i = 0; i < sizeof(binaryArray); i++)
+	{
+	   if (binaryArray[i] == 0)
+	   {
+		   cyhal_gpio_write(P13_6, 1);
+		   delay();
+		   cyhal_gpio_write(P13_6, 0);
+		   delay();
+
+	   }
+	   else if (binaryArray[i] == 1)
+	   {
+		   cyhal_gpio_write(P13_6, 0);
+		   delay();
+		   cyhal_gpio_write(P13_6, 1);
+		   delay();
+
+	   }
+	}
+}
+
+
+void diffManchesterCoder()
+{
+	for (int j = 0; j < sizeof(binaryArray); j++)
+	{
+	   if (binaryArray[j] == 0)
+	   {
+		   cyhal_gpio_toggle(P13_6);
+		   delay();
+		   cyhal_gpio_toggle(P13_6);
+		   delay();
+	   }
+	   else
+	   {
+		   delay();
+		   cyhal_gpio_toggle(P13_6);
+		   delay();
+	   }
+	}
+
+	cyhal_gpio_write(P13_6, 0);
+}
+
+/* [] END OF FILE */
