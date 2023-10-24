@@ -191,8 +191,8 @@ int main(void)
 
         if(teller == 16)
         {
-        	//manchesterDecoder();
-        	diffManchesterDecoder();
+        	manchesterDecoder();
+        	//diffManchesterDecoder();
         	convertToString(binCharArray, 8);
         	clearArray();
         	teller = 0;

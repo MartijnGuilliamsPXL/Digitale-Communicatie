@@ -39,8 +39,8 @@ int main(void)
     cyhal_gpio_write(P13_6, 1);
     delay();
 
-    //manchesterCoder();
-    diffManchesterCoder();
+    manchesterCoder();
+    //diffManchesterCoder();
 
 
     for (;;)
