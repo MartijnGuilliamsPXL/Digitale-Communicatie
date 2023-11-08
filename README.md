@@ -1,6 +1,6 @@
 # Digitale-Communicatie
 
-## Inhoud van opdracht
+## Inhoud van opdracht 1
 
 Demonstreer en vergelijk de effectiviteit van verschillende digitale communicatiemethoden aan met behulp van een PSoC. Het is belangrijk om een medium te kiezen dat geschikt is voor het testen van deze methoden. Het toevoegen van ruis, interferentie, obstakels en andere vormen van verstoring aan het communicatiemedium zal helpen om beter te begrijpen hoe deze methoden omgaan met echte uitdagingen in de communicatie.
 
@@ -22,19 +22,28 @@ Iedere groep moet een andere lijncodering techniek implementeren bv. On-off keyi
 Bijvoorbeeld: Gebruik RS-232 om verschillende lijn-coderingstechnieken zoals Manchester-codering of NRZ te testen.
 
 
-## Ideeën
+## Inhoud van opdracht 2
 
-Een digitale 1 is de led aandoen voor één volledige seconde.
+Verklaar en vergelijk 3 communicatie systemen (zie opdrachten). Schrijf een persoonlijke reflectie als conclusie waarin je het huidige en toekomstig perspectief van de protocollen bespreekt in fucntie van de onderzochte eigenschappen. 
 
-Een digitale 0 is de led aandoen voor een halve seconde.
+Dit moet op binair niveau besproken worden, waarmee ik wil zeggen dat lijncoderingen, redundantie en dergelijke besproken dient te worden. 
 
-Hierbij kunnen we een threshold op de LDR gebruiken van 50% lichtintensiteit.
+Mogelijke criteria - afhankelijk van de technologie - die je kan bespreken zijn:
 
-## Ruis
-Omgevingslicht.
+organisation, application, standard, norm
 
-LDR blokkeren met object.
+Coverage, Range, locaction, spreading
 
-LDR is gevoelig aan temperatuur, EMI, voedingsspanning, ....
+Carrier, BW, multiple acces
 
+Signalgeneration, modulation, Line (encoding)
 
+Capacity, duplex, scalability, data rate support, reliability
+
+Scalability, link budget
+
+Low power, latency, Energy efficiency
+
+Dien een paper en een video (samenvatting van minimaal 2min. en maximaal 10min) in waarin je het communicatie systeem bespreekt. 
+
+De video gaat over je persoonlijke reflectie ( huidige en toekomstig perspectief van de protocollen bespreken in functie van de eigenschappen). 
